@@ -175,6 +175,69 @@ export function CheckIcon({ className }: IconProps) {
   return wrap(<path d="M4.5 12.5 9 17l10.5-11" />, className);
 }
 
+export function UsersIcon({ className }: IconProps) {
+  return wrap(
+    <>
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M3 19c.6-3.2 2.9-5 6-5s5.4 1.8 6 5" />
+      <path d="M16.5 5.6a3.2 3.2 0 0 1 0 5.8M17.5 14.4c2 .7 3.3 2.3 3.7 4.6" />
+    </>,
+    className
+  );
+}
+
+export function SearchIcon({ className }: IconProps) {
+  return wrap(
+    <>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4.5 4.5" />
+    </>,
+    className
+  );
+}
+
+export function CalendarIcon({ className }: IconProps) {
+  return wrap(
+    <>
+      <rect x="3.5" y="5" width="17" height="15" rx="2" />
+      <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
+    </>,
+    className
+  );
+}
+
+export function HandshakeIcon({ className }: IconProps) {
+  return wrap(
+    <>
+      <path d="m3 12 3.5-3.5 4 1 3-1 3.5 2.5" />
+      <path d="M13.5 10.5l3.5 3.5-2 2-2.5-2.5" />
+      <path d="M6.5 8.5 3 12l3 3 2-1.5" />
+      <path d="M10.5 9.5 8 12l3 3 2-1.5" />
+    </>,
+    className
+  );
+}
+
+export function DollarIcon({ className }: IconProps) {
+  return wrap(
+    <>
+      <path d="M12 3.5v17" />
+      <path d="M16 7.5c-.8-1.3-2.3-2-4-2-2.2 0-3.8 1.1-3.8 2.9 0 4 7.8 2.2 7.8 6.3 0 1.9-1.8 3.1-4 3.1-1.9 0-3.5-.8-4.2-2.2" />
+    </>,
+    className
+  );
+}
+
+export function TrendUpIcon({ className }: IconProps) {
+  return wrap(
+    <>
+      <path d="m3.5 16.5 5-5 3.5 3.5 7-7.5" />
+      <path d="M14.5 7.5h5.5V13" />
+    </>,
+    className
+  );
+}
+
 const CHANNEL_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   "cold-email": MailIcon,
   "linkedin-outreach": ShareIcon,

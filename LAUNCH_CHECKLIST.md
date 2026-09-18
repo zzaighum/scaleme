@@ -69,6 +69,20 @@ using the preview.
 
 ## Evidence and content
 
+- [ ] **Hero funnel figures are mockup placeholders.** The percentages on the
+      funnel bands (100/60/30/10) and the floating cards (1,250 new leads, 375
+      meetings booked, 89 deals closed, +72% pipeline) are reproduced from the
+      Figma mockup so the build matches it one-to-one for review. They are not
+      real ScaleMe results. They are gated on `siteMode === "preview"` in
+      `src/components/ProcessIllustration.tsx`, so switching
+      `NEXT_PUBLIC_SITE_MODE` to `live` drops them automatically — but before
+      launch, decide whether to replace them with real reported figures or
+      leave them off permanently.
+- [ ] **Hero channel chips name channels we don't sell.** The funnel graphic
+      labels five acquisition channels from the mockup (LinkedIn, Email,
+      Website, Paid Ads, Referrals). Only email, LinkedIn and calling are
+      actually in scope; "Website" and "Paid Ads" are not services ScaleMe
+      offers. Re-label these to the real four channels before launch.
 - [ ] Testimonials, case studies, and a team/founder module are all switched off
       (`testimonialsEnabled`, `caseStudiesEnabled`, `teamEnabled` in
       `src/config/site.ts`) because no approved material exists yet. Avicenna

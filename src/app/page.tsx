@@ -17,6 +17,7 @@ import {
   StorefrontIcon,
   BriefcaseIcon,
   CodeIcon,
+  ArrowRightIcon,
 } from "@/components/Icon";
 import { channels } from "@/data/services";
 import { faqs } from "@/data/faqs";
@@ -85,19 +86,34 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="mx-auto max-w-[1200px] px-5 pb-16 pt-14 sm:px-6 sm:pt-20">
-        <div className="grid items-center gap-12 lg:grid-cols-[11fr_9fr]">
+      <section className="mx-auto max-w-[1280px] px-5 pb-16 pt-14 sm:px-6 sm:pt-20">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-4 py-2 text-[15px] font-medium text-primary">
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary" />
               {siteConfig.descriptor}
             </span>
-            <h1 className="mt-5 text-[38px] leading-[1.08] sm:text-[52px] md:text-[64px]">
-              Connect your IT expertise with{" "}
-              <span className="text-primary underline decoration-4 underline-offset-8 decoration-accent/40">
-                the right buyers
+            <h1 className="mt-6 text-[36px] font-extrabold leading-[1.12] tracking-tight sm:text-[46px] md:text-[54px] lg:text-[40px] xl:text-[50px]">
+              Stop{" "}
+              <span className="relative inline-block">
+                <span className="text-primary">Chasing</span> Leads.
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 200 10"
+                  preserveAspectRatio="none"
+                  className="absolute -bottom-1.5 left-0 h-[7px] w-full text-primary"
+                >
+                  <path
+                    d="M2 7C42 3 84 2.5 198 4.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </span>
-              .
+              <br />
+              Start Booking Meetings.
             </h1>
             <p className="mt-6 max-w-[60ch] text-lg leading-8 text-muted-ink">
               Reach businesses that fit your services through focused email, LinkedIn outreach,
@@ -106,11 +122,12 @@ export default function HomePage() {
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
               <ButtonLink href="/book-a-call">{siteConfig.primaryCta}</ButtonLink>
-              <ButtonLink href="/how-it-works" variant="secondary">
+              <ButtonLink href="/how-it-works" variant="secondary" className="gap-8">
                 {siteConfig.secondaryCta}
+                <ArrowRightIcon className="h-4 w-4 text-muted-ink" />
               </ButtonLink>
             </div>
-            <p className="mt-3 text-sm text-muted-ink">
+            <p className="mt-6 max-w-[42ch] text-base leading-7 text-muted-ink">
               A {siteConfig.callDurationMinutes}-minute conversation about your services, target
               market, and next stage of growth.
             </p>

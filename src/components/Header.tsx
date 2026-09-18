@@ -47,14 +47,19 @@ export function Header() {
   }, [servicesOpen, mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-canvas/95 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-[1200px] items-center justify-between px-5 sm:px-6">
-        <Link href="/" className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-ink">
-          <BrandMark className="h-8 w-8" />
-          {siteConfig.brandName}
+    <header className="sticky top-0 z-50 border-b border-border bg-surface/95 backdrop-blur">
+      <div className="mx-auto flex h-24 max-w-[1280px] items-center justify-between px-5 sm:px-6">
+        <Link href="/" className="flex items-center gap-3.5">
+          <BrandMark className="h-14 w-14 shrink-0" />
+          <span className="flex flex-col leading-tight">
+            <span className="text-xl font-bold tracking-tight text-ink">{siteConfig.brandName}</span>
+            <span className="max-w-[9rem] text-[11px] leading-snug text-muted-ink">
+              {siteConfig.descriptor}
+            </span>
+          </span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-8">
           <div
             className="relative"
             onMouseEnter={() => setServicesOpen(true)}
@@ -66,7 +71,7 @@ export function Header() {
               aria-expanded={servicesOpen}
               aria-haspopup="true"
               onClick={() => setServicesOpen((v) => !v)}
-              className={`flex min-h-[44px] items-center gap-1 text-base font-medium ${
+              className={`flex min-h-[44px] items-center gap-1 whitespace-nowrap text-base font-medium ${
                 servicesActive ? "text-primary" : "text-ink"
               }`}
               aria-current={servicesActive ? "page" : undefined}
@@ -95,7 +100,7 @@ export function Header() {
               key={item.href}
               href={item.href}
               aria-current={isActive(pathname, item.href) ? "page" : undefined}
-              className={`text-base font-medium ${
+              className={`whitespace-nowrap text-base font-medium ${
                 isActive(pathname, item.href) ? "text-primary" : "text-ink"
               }`}
             >
@@ -105,7 +110,9 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <ButtonLink href="/book-a-call">{siteConfig.primaryCta}</ButtonLink>
+          <ButtonLink href="/book-a-call" className="whitespace-nowrap px-5">
+            {siteConfig.primaryCta}
+          </ButtonLink>
         </div>
 
         <button
