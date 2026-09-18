@@ -1,8 +1,8 @@
-# Relaystride — lead-generation agency website
+# ScaleMe — lead-generation agency website
 
 Marketing website for an agency that sells lead-generation services to IT companies
 (cold email, LinkedIn outreach, cold calling, marketplace prospecting). Built from
-`LLM Website Build Brief.md`. "Relaystride" is a **provisional, unconfirmed** brand
+`LLM Website Build Brief.md`. "ScaleMe" is a **provisional, unconfirmed** brand
 name — see [Branding](#branding-and-content-you-can-edit-centrally) below.
 
 Stack: Next.js 16 (App Router) + TypeScript + Tailwind CSS v4, with Supabase Postgres

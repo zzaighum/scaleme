@@ -7,10 +7,11 @@ using the preview.
 
 ## Brand and legal identity
 
-- [ ] Confirm the final brand name (or approve "Relaystride" as final) and update
+- [ ] Confirm the final brand name (or approve "ScaleMe" as final) and update
       `NEXT_PUBLIC_BRAND_NAME`. No domain, trademark, or company-register check has
-      been run on "Relaystride" or any shortlisted alternative — the brief's naming
-      research was a limited web screen only (16 Sept 2026), not a clearance search.
+      been run on "ScaleMe" or any earlier shortlisted alternative — the brief's
+      naming research was a limited web screen only (16 Sept 2026), not a
+      clearance search.
 - [ ] Register/confirm the real legal business name and set
       `NEXT_PUBLIC_LEGAL_BUSINESS_NAME` (shown in the footer copyright line).
 - [ ] Supply a monitored public contact email and set `NEXT_PUBLIC_CONTACT_EMAIL`

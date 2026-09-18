@@ -14,7 +14,7 @@ function asBookingMode(value: string | undefined): BookingMode {
 
 export const siteConfig = {
   // Brand
-  brandName: process.env.NEXT_PUBLIC_BRAND_NAME || "Relaystride",
+  brandName: process.env.NEXT_PUBLIC_BRAND_NAME || "ScaleMe",
   brandStatus: "provisional" as const,
   descriptor: "Lead generation for IT companies",
   supportingLine: "Better conversations for IT companies.",

@@ -10,7 +10,7 @@ import { createHmac, randomBytes, timingSafeEqual } from "crypto";
 // (e.g. Turbopack's per-route compilation in dev), so a plain module-level
 // variable is not guaranteed to be shared between them. globalThis is the
 // one thing every module instance in the same process actually shares.
-const GLOBAL_KEY = Symbol.for("relaystride.receiptEphemeralSecret");
+const GLOBAL_KEY = Symbol.for("scaleme.receiptEphemeralSecret");
 type GlobalWithSecret = typeof globalThis & { [GLOBAL_KEY]?: string };
 
 function getSecret(): string {
