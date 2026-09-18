@@ -46,28 +46,37 @@ html {
   }
 }
 
-body {
-  background: var(--color-canvas);
-  color: var(--color-ink);
-  font-family: var(--font-body), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  font-size: 18px;
-  line-height: 1.6;
-}
-
-@media (max-width: 640px) {
+/*
+ * Tailwind v4 wraps its utilities in `@layer utilities`. Rules below need to
+ * live in a layer too (`base`), otherwise these unlayered element selectors
+ * would always beat layered utility classes like `text-white` on h1-h4,
+ * regardless of specificity — per the CSS Cascade Layers spec, unlayered
+ * rules outrank any layered rule no matter how specific the layered one is.
+ */
+@layer base {
   body {
-    font-size: 16px;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-body), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
   }
-}
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-heading), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  color: var(--color-ink);
-  font-weight: 600;
-  line-height: 1.15;
+  @media (max-width: 640px) {
+    body {
+      font-size: 16px;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    color: var(--color-ink);
+    font-weight: 600;
+    line-height: 1.15;
+  }
 }
 
 .skip-link {

@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { primaryNav, servicesDropdown } from "@/data/nav";
 import { siteConfig } from "@/config/site";
 import { ButtonLink } from "./Button";
+import { BrandMark } from "./Icon";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -48,7 +49,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-canvas/95 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-[1200px] items-center justify-between px-5 sm:px-6">
-        <Link href="/" className="text-xl font-bold tracking-tight text-ink">
+        <Link href="/" className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-ink">
+          <BrandMark className="h-8 w-8" />
           {siteConfig.brandName}
         </Link>
 

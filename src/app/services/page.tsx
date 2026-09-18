@@ -33,6 +33,7 @@ export default function ServicesPage() {
         {channels.map((channel) => (
           <ChannelCard
             key={channel.slug}
+            slug={channel.slug}
             title={channel.cardTitle}
             body={channel.cardBody}
             href={`/services/${channel.slug}`}

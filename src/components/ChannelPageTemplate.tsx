@@ -51,7 +51,7 @@ export function ChannelPageTemplate({ slug }: { slug: string }) {
         <h2 className="text-center text-[26px] sm:text-[32px]">Related services</h2>
         <div className="mt-8 grid gap-6 sm:grid-cols-3">
           {related.map((c) => (
-            <ChannelCard key={c.slug} title={c.cardTitle} body={c.cardBody} href={`/services/${c.slug}`} />
+            <ChannelCard key={c.slug} slug={c.slug} title={c.cardTitle} body={c.cardBody} href={`/services/${c.slug}`} />
           ))}
         </div>
       </div>

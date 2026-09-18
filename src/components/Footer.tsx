@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { footerLinks, footerLegalLinks } from "@/data/nav";
 import { siteConfig } from "@/config/site";
+import { BrandMark } from "./Icon";
 
 export function Footer() {
   const businessName = siteConfig.businessIdentity.legalName;
@@ -11,7 +12,10 @@ export function Footer() {
       <div className="mx-auto max-w-[1200px] px-5 py-14 sm:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="text-lg font-bold text-ink">{siteConfig.brandName}</p>
+            <p className="flex items-center gap-2 text-lg font-bold text-ink">
+              <BrandMark className="h-7 w-7" />
+              {siteConfig.brandName}
+            </p>
             <p className="mt-2 text-sm leading-6 text-muted-ink">{siteConfig.descriptor}</p>
             {!businessName ? (
               <p className="mt-4 text-xs leading-5 text-muted-ink">
