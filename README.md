@@ -1,17 +1,26 @@
 # ScaleMe — lead-generation agency website
 
 Marketing website for an agency that sells lead-generation services to IT companies
-(cold email, LinkedIn outreach, cold calling, marketplace prospecting). Built from
-`LLM Website Build Brief.md`. "ScaleMe" is a **provisional, unconfirmed** brand
+(cold email, LinkedIn outreach, cold calling, marketplace prospecting). Built from an
+internal website build brief (not included in this repo), with the homepage styled
+to match the team's Figma design. "ScaleMe" is a **provisional, unconfirmed** brand
 name — see [Branding](#branding-and-content-you-can-edit-centrally) below.
 
 Stack: Next.js 16 (App Router) + TypeScript + Tailwind CSS v4, with Supabase Postgres
 as the durable enquiry store in live mode.
 
+> **Status:** preview build. It runs out of the box with no accounts, but it is not
+> ready for public launch — see [`LAUNCH_CHECKLIST.md`](LAUNCH_CHECKLIST.md).
+
 ## Getting started
 
+Requires Node.js 20+ and npm.
+
 ```bash
+git clone https://github.com/zzaighum/scaleme.git
+cd scaleme
 npm install
+cp .env.example .env.local   # optional in preview mode; required for live mode
 npm run dev
 ```
 
@@ -27,6 +36,36 @@ npm run lint    # ESLint
 npm start       # run a production build
 npx tsc --noEmit  # type-check only
 ```
+
+## Project structure
+
+```
+src/
+  app/                 # routes (App Router): one folder per page, plus api/
+    api/enquiry/       # enquiry form handler (validation, rate limit, storage)
+    api/booking-click/ # outbound scheduler click tracking
+  components/          # shared UI: Header, Footer, EnquiryForm, hero funnel, icons…
+  config/site.ts       # brand, mode, CTA labels, booking + identity settings
+  data/                # nav, service/channel copy, FAQs
+  lib/                 # validation, signed receipts, Supabase client, lead storage
+supabase/migrations/   # database schema (enquiries, rate limiting)
+```
+
+## Homepage design (Figma)
+
+The homepage hero and section styling follow the team's Figma file. Two things
+worth knowing:
+
+- The hero funnel graphic in Figma is a placed raster image, so it couldn't be
+  extracted; [`src/components/ProcessIllustration.tsx`](src/components/ProcessIllustration.tsx)
+  is an original SVG rebuilt to match its composition.
+- **The funnel percentages and metric cards (1,250 leads, 375 meetings, etc.) are
+  mockup placeholders copied from Figma, not real results.** They only render in
+  preview mode — setting `NEXT_PUBLIC_SITE_MODE=live` removes them automatically.
+  Replace them with real figures or leave them off before launch.
+
+Client logos, review badges and testimonials from the Figma file were deliberately
+not included, since no approved material exists for this brand yet.
 
 ## Preview vs live mode
 
@@ -116,6 +155,15 @@ A **connected** mode (authenticated provider webhook, verified booking confirmat
 is deliberately **not implemented** — no booking provider was confirmed in the
 brief, and the brief is explicit that unsupported event verification means external
 mode, not a simulated connected one. See `LAUNCH_CHECKLIST.md`.
+
+## Deployment
+
+Any host that runs a Next.js server works (Vercel, Netlify, a Node container) — the
+enquiry and booking-click API routes need server execution, so a pure static export
+won't do. Set the environment variables from `.env.example` in the host's settings,
+keeping the `SUPABASE_*`, `NOTIFICATION_WEBHOOK_URL` and `RECEIPT_SIGNING_SECRET`
+values server-only. Leave `NEXT_PUBLIC_SITE_MODE=preview` until everything in
+`LAUNCH_CHECKLIST.md` is resolved.
 
 ## What was verified
 

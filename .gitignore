@@ -40,3 +40,25 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# logs
+*.log
+logs/
+
+# editors / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+Thumbs.db
+
+# local tool state (keep the shared launch config, ignore per-user settings)
+.claude/*
+!.claude/launch.json
+
+# scratch exports from design review
+.figma-review/
+
+# supabase CLI local state
+supabase/.branches
+supabase/.temp
