@@ -159,12 +159,51 @@ mode, not a simulated connected one. See `LAUNCH_CHECKLIST.md`.
 
 ## Deployment
 
-Any host that runs a Next.js server works (Vercel, Netlify, a Node container) — the
-enquiry and booking-click API routes need server execution, so a pure static export
-won't do. Set the environment variables from `.env.example` in the host's settings,
-keeping the `SUPABASE_*`, `NOTIFICATION_WEBHOOK_URL` and `RECEIPT_SIGNING_SECRET`
-values server-only. Leave `NEXT_PUBLIC_SITE_MODE=preview` until everything in
-`LAUNCH_CHECKLIST.md` is resolved.
+This must run as a **Node server**, not a static upload — the enquiry API, the
+booking-click redirect and the signed-receipt check on `/thank-you` all execute
+per request. `output: 'export'` would break the enquiry form.
+
+Requirements: **Node 20+**, a build step (`npm run build`), and a persistent
+process. Verified locally against a production build and a standalone build.
+
+### Hostinger
+
+Node.js apps need **Business Web Hosting** or a **Cloud** plan (or a VPS with
+manual setup). Basic/shared plans can't run this.
+
+1. hPanel → **Websites** → **Add Website** → **Node.js**.
+2. Choose **GitHub** and connect this repository, branch `main`. (Alternatives:
+   upload a .zip, or use the Hostinger Connector from your IDE.)
+3. Runtime **Node 20+**. Build command `npm run build`, output directory `.next`.
+   Hostinger applies `output: 'standalone'` and starts the bundled server itself —
+   don't set that in `next.config.ts`.
+4. Add the environment variables below **before the first build** (see the warning).
+5. Deploy, then point your domain at the app and enable SSL.
+
+### Environment variables
+
+Set these in the host's dashboard, not in a committed file.
+
+| Variable | Scope | Notes |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_MODE` | public | `preview` (banner + no indexing) or `live` |
+| `NEXT_PUBLIC_SITE_URL` | public | Final URL; used for canonical links, sitemap, OG image |
+| `NEXT_PUBLIC_BRAND_NAME` | public | Optional; overrides the default brand name |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | public | Shown in the footer and as a booking fallback |
+| `NEXT_PUBLIC_BOOKING_URL` | public | Hosted scheduler link; blank hides the booking area |
+| `SUPABASE_URL` | **server only** | Required in live mode |
+| `SUPABASE_SERVICE_ROLE_KEY` | **server only** | Bypasses RLS — never expose to the browser |
+| `RECEIPT_SIGNING_SECRET` | **server only** | `openssl rand -hex 32`; keeps receipts valid across restarts |
+| `NOTIFICATION_WEBHOOK_URL` | **server only** | Where new enquiries are posted |
+
+> ⚠️ `NEXT_PUBLIC_*` values are **baked in at build time**, not read at runtime.
+> Changing one requires a rebuild/redeploy — setting it after the build leaves the
+> old value compiled into the pages.
+
+Deploy with `NEXT_PUBLIC_SITE_MODE=preview` until everything in
+`LAUNCH_CHECKLIST.md` is resolved. In preview the site is excluded from search
+engines, the enquiry form stores nothing, and the mockup funnel figures are shown;
+switching to `live` needs Supabase configured and the legal pages approved.
 
 ## What was verified
 
