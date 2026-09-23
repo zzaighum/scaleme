@@ -4,6 +4,10 @@ import { siteConfig } from "@/config/site";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Static export prerenders metadata routes at build time; Next requires the
+// intent to be explicit (see the static-exports guide).
+export const dynamic = "force-static";
+
 export default function OpengraphImage() {
   return new ImageResponse(
     (

@@ -52,7 +52,14 @@ export const siteConfig = {
   // Booking
   bookingMode: asBookingMode(process.env.NEXT_PUBLIC_BOOKING_MODE),
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "",
+
+  // Enquiry destination on the static build. There is no `/api/enquiry` here,
+  // so the form posts straight to whatever CRM/form endpoint this names
+  // (HubSpot, Formspree, Getform, …). Left blank, the form stays an
+  // illustrative demo that captures nothing and says so on screen.
+  formEndpoint: process.env.NEXT_PUBLIC_FORM_ENDPOINT || "",
 } as const;
 
 export const isPreview = siteConfig.siteMode === "preview";
 export const isSchedulingConfigured = siteConfig.bookingUrl.trim().length > 0;
+export const isFormEndpointConfigured = siteConfig.formEndpoint.trim().length > 0;

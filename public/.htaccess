@@ -1,0 +1,32 @@
+# Static export of this Next.js site (output: "export", trailingSlash: true),
+# served by Hostinger's shared stack (LiteSpeed, reads Apache directives).
+#
+# Next emits every route as <route>/index.html, so directory serving does the
+# routing — there is no rewrite to a server process, because there isn't one.
+
+DirectoryIndex index.html
+
+# Next writes its own styled 404 page; without this the host shows its default.
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS. Requires SSL to be active for the domain first — if the
+  # certificate is not yet issued, this redirects into a loop. Enable SSL in
+  # hPanel before uploading, or comment this block out until it is.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+# Build assets are content-hashed, so they can be cached indefinitely.
+# HTML must not be, or visitors keep seeing the previous deploy.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2?|svg|png|jpg|jpeg|webp|avif)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>

@@ -17,17 +17,28 @@ launch blockers. Brand, site mode and CTA labels all live in `src/config/site.ts
 - Site runs in **preview mode** by default: "illustrative only" banner shown,
   `robots.txt` disallows all, enquiry form stores nothing.
 
-## Next task: deploy to Hostinger
+## Deployment: two branches, two shapes
 
-Not started. Needs **Business Web Hosting** or a **Cloud** plan (basic/shared
-can't run Node). Hostinger builds with `npm run build` and applies
-`output: 'standalone'` itself — do not set that in `next.config.ts`.
-Full steps and the environment-variable table are in README → Deployment.
+The Hostinger account (`abdullahsheikh18@gmail.com`, accessed via collaborator
+login) is on the **Single** plan, which cannot run Node. So there are two shapes:
 
-A Hostinger MCP connector was expected but has never been visible to a session
-here. Check with `session_connectors_status` before assuming it exists; if it's
-absent, deployment is done by the user in hPanel (GitHub deploy is wired up and
-the repo is pushed).
+- `main` — Node server. Needs Business/Cloud/VPS. Hostinger builds with
+  `npm run build` and applies `output: 'standalone'` itself — do not set that in
+  `next.config.ts`.
+- `static-export-hostinger` — `output: "export"` to `out/`, uploaded to
+  `public_html`. Deployable on the current plan. `src/app/api/*` is deleted
+  there, so the enquiry form captures nothing until
+  `NEXT_PUBLIC_FORM_ENDPOINT` points at a CRM. The owner intends to wire a CRM
+  in later; that variable is the single swap point.
+
+Full comparison table and the environment-variable table are in
+README → Deployment.
+
+The Hostinger MCP connector is installed on the account and works in claude.ai
+chat, but as of 24 Sept 2026 it only ever reached a Code session as status
+`pending` — never `connected`, so its tools were never callable here. Check
+`session_connectors_status` rather than assuming either way. The working route
+was the **Claude in Chrome** extension driving hPanel directly.
 
 `NEXT_PUBLIC_*` values are baked in at build time — they must be set in the host
 before the first build, and changing one needs a redeploy.

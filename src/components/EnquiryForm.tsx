@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MAIN_IT_SERVICE_OPTIONS, validateEnquiry, type EnquiryInput } from "@/lib/validation";
-import { siteConfig } from "@/config/site";
+import { isFormEndpointConfigured, siteConfig } from "@/config/site";
 import { Button } from "./Button";
 import { Notice } from "./Notice";
 
@@ -73,8 +73,16 @@ export function EnquiryForm() {
     const payloadHash = simpleHash(JSON.stringify(result.data));
     const idempotencyKey = getIdempotencyKey(payloadHash);
 
+    // No endpoint configured: this build is static, so there is nothing to post
+    // to. Show the illustrative confirmation rather than a failure — /thank-you
+    // labels it as a demo and no data leaves the browser.
+    if (!isFormEndpointConfigured) {
+      router.push("/thank-you/?demo=1");
+      return;
+    }
+
     try {
-      const res = await fetch("/api/enquiry", {
+      const res = await fetch(siteConfig.formEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -106,7 +114,7 @@ export function EnquiryForm() {
         return;
       }
 
-      if (!res.ok || !body?.ok) {
+      if (!res.ok) {
         setStatus("failure");
         setStatusMessage(
           "We could not send your brief. Your details are still here—please try again."
@@ -114,7 +122,9 @@ export function EnquiryForm() {
         return;
       }
 
-      router.push(body.redirect as string);
+      // A third-party endpoint decides its own response shape, so success is
+      // judged on the HTTP status alone — it will not return our `redirect`.
+      router.push("/thank-you/?sent=1");
     } catch {
       setStatus("failure");
       setStatusMessage(

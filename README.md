@@ -159,14 +159,42 @@ mode, not a simulated connected one. See `LAUNCH_CHECKLIST.md`.
 
 ## Deployment
 
-This must run as a **Node server**, not a static upload — the enquiry API, the
-booking-click redirect and the signed-receipt check on `/thank-you` all execute
-per request. `output: 'export'` would break the enquiry form.
+There are two supported shapes, on two different branches. Pick by what the host
+can run.
 
-Requirements: **Node 20+**, a build step (`npm run build`), and a persistent
-process. Verified locally against a production build and a standalone build.
+| | `main` — Node server | `static-export-hostinger` — static |
+| --- | --- | --- |
+| Host requirement | Node 20+, persistent process | any static file host |
+| Hostinger plan | Business / Cloud / VPS | Single or shared |
+| Enquiry capture | full pipeline (Supabase, rate limit, idempotency, webhook) | only via `NEXT_PUBLIC_FORM_ENDPOINT` |
+| `/thank-you` | server-verified signed receipt | query flag, labelled as a demo |
+| Booking click logging | `/api/booking-click` | none — straight to the scheduler |
 
-### Hostinger
+### Static export (`static-export-hostinger` branch)
+
+For Hostinger's **Single/shared** plan, which cannot run Node. `next.config.ts`
+sets `output: "export"`, and `npm run build` writes a self-contained site to
+`out/` — upload its **contents** to `public_html`.
+
+What this shape gives up, deliberately:
+
+- `src/app/api/*` is deleted on the branch. Route handlers need a server.
+- There is no secret to sign a receipt with, so `/thank-you` reads a `?demo=1` /
+  `?sent=1` query flag instead. The flag is a display hint, not proof of
+  delivery — with no endpoint configured the page says so on screen.
+- With `NEXT_PUBLIC_FORM_ENDPOINT` unset the form captures **nothing**. It
+  validates, then shows the illustrative confirmation. Point that variable at a
+  CRM or form endpoint (HubSpot, Formspree, Getform) to capture real enquiries;
+  that is the only change needed.
+- `next/image` runs unoptimized — there is no image optimizer at request time.
+- Supabase, the rate limiter, idempotency and the notification webhook are all
+  unreachable. Live mode is not available on this branch.
+
+`public/.htaccess` ships with the build and sets the 404 document, asset caching
+and an HTTPS redirect. **Enable SSL for the domain before uploading** — the
+redirect loops until the certificate exists.
+
+### Hostinger (Node — `main`)
 
 Node.js apps need **Business Web Hosting** or a **Cloud** plan (or a VPS with
 manual setup). Basic/shared plans can't run this.
@@ -191,6 +219,7 @@ Set these in the host's dashboard, not in a committed file.
 | `NEXT_PUBLIC_BRAND_NAME` | public | Optional; overrides the default brand name |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | public | Shown in the footer and as a booking fallback |
 | `NEXT_PUBLIC_BOOKING_URL` | public | Hosted scheduler link; blank hides the booking area |
+| `NEXT_PUBLIC_FORM_ENDPOINT` | public | **Static branch only.** CRM/form endpoint the enquiry form posts to; blank makes the form an illustrative demo that captures nothing |
 | `SUPABASE_URL` | **server only** | Required in live mode |
 | `SUPABASE_SERVICE_ROLE_KEY` | **server only** | Bypasses RLS — never expose to the browser |
 | `RECEIPT_SIGNING_SECRET` | **server only** | `openssl rand -hex 32`; keeps receipts valid across restarts |

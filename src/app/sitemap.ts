@@ -16,6 +16,10 @@ const marketingRoutes = [
   "/terms",
 ];
 
+// Static export prerenders metadata routes at build time; Next requires the
+// intent to be explicit (see the static-exports guide).
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   // Preview mode is excluded from indexing entirely (see robots.ts), but the
   // sitemap itself is harmless to generate either way.
