@@ -137,10 +137,14 @@ export function EnquiryForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-      {siteConfig.siteMode === "preview" ? (
-        <Notice tone="info" title="Demo only — no enquiry will be sent.">
-          Try the demo flow: submitting this form runs an illustrative preview and does not
-          contact anyone.
+      {/* The warning tracks whether there is anywhere to send to, not the site
+          mode. On the static build a live site with no endpoint still captures
+          nothing, and a visitor should know that before typing, not after. */}
+      {!isFormEndpointConfigured ? (
+        <Notice tone="info" title="This form is not connected yet — nothing will be sent.">
+          {siteConfig.siteMode === "preview"
+            ? "Try the demo flow: submitting this form runs an illustrative preview and does not contact anyone."
+            : "Submitting shows an illustrative confirmation only. Your details stay in your browser and do not reach us."}
         </Notice>
       ) : null}
 
