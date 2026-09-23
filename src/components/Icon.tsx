@@ -250,23 +250,3 @@ export function ChannelIcon({ slug, className }: { slug: string } & IconProps) {
   return <IconComponent className={className} />;
 }
 
-// Abstract connection mark: three coordinated points, echoing the four
-// channels feeding into one handoff. Deliberately simple per the brief
-// ("a simple typographic wordmark and an abstract connection mark are
-// enough for the preview") rather than a full illustrative logo.
-export function BrandMark({ className = "h-8 w-8" }: IconProps) {
-  return (
-    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" className={className}>
-      <circle cx="16" cy="16" r="15" fill="var(--color-primary)" opacity="0.1" />
-      <path
-        d="M9 20.5 15 9M15 9l8 3.5M9 20.5 23 12.5"
-        stroke="var(--color-primary)"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <circle cx="15" cy="9" r="2.4" fill="var(--color-primary)" />
-      <circle cx="23" cy="12.5" r="2.4" fill="var(--color-accent)" />
-      <circle cx="9" cy="20.5" r="2.4" fill="var(--color-primary)" />
-    </svg>
-  );
-}

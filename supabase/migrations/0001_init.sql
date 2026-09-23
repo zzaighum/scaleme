@@ -1,4 +1,4 @@
--- YourLeadsPartner enquiry storage.
+-- YourLeadspartner enquiry storage.
 -- Run this against your Supabase project (SQL editor, or `supabase db push`
 -- with the CLI). Tables are locked down with RLS and no policies, so the
 -- ONLY access path is the service role key from the server-side route

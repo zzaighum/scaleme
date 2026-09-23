@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   footerServicesLinks,
   footerMethodologyLinks,
@@ -6,7 +7,6 @@ import {
   footerLegalLinks,
 } from "@/data/nav";
 import { siteConfig } from "@/config/site";
-import { BrandMark } from "./Icon";
 
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
@@ -35,10 +35,14 @@ export function Footer() {
       <div className="mx-auto max-w-[1200px] px-5 py-14 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))]">
           <div>
-            <p className="flex items-center gap-2 text-lg font-bold text-ink">
-              <BrandMark className="h-7 w-7" />
-              {siteConfig.brandName}
-            </p>
+            <Image
+              src="/logo.svg"
+              alt={siteConfig.brandName}
+              width={2196}
+              height={353}
+              unoptimized
+              className="h-8 w-auto"
+            />
             <p className="mt-3 max-w-[34ch] text-sm leading-6 text-muted-ink">
               We help IT companies reach relevant buyers through focused research, coordinated
               outreach, and clear qualification.

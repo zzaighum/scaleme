@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { primaryNav, servicesDropdown } from "@/data/nav";
 import { siteConfig } from "@/config/site";
 import { ButtonLink } from "./Button";
-import { BrandMark } from "./Icon";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -48,18 +48,20 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-surface/95 backdrop-blur">
-      <div className="mx-auto flex h-24 max-w-[1280px] items-center justify-between px-5 sm:px-6">
-        <Link href="/" className="flex items-center gap-3.5">
-          <BrandMark className="h-14 w-14 shrink-0" />
-          <span className="flex flex-col leading-tight">
-            <span className="text-xl font-bold tracking-tight text-ink">{siteConfig.brandName}</span>
-            <span className="max-w-[9rem] text-[11px] leading-snug text-muted-ink">
-              {siteConfig.descriptor}
-            </span>
-          </span>
+      <div className="mx-auto flex h-24 max-w-[1280px] items-center justify-between gap-4 px-5 sm:px-6 xl:gap-8">
+        <Link href="/" className="flex shrink-0 items-center" aria-label={`${siteConfig.brandName} home`}>
+          <Image
+            src="/logo.svg"
+            alt={siteConfig.brandName}
+            width={2196}
+            height={353}
+            priority
+            unoptimized
+            className="h-7 w-auto sm:h-8 xl:h-9"
+          />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex xl:gap-8">
+        <nav aria-label="Primary" className="hidden items-center gap-5 lg:flex xl:gap-8">
           <div
             className="relative"
             onMouseEnter={() => setServicesOpen(true)}

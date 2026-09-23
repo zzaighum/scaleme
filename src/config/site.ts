@@ -14,7 +14,8 @@ function asBookingMode(value: string | undefined): BookingMode {
 
 export const siteConfig = {
   // Brand
-  brandName: process.env.NEXT_PUBLIC_BRAND_NAME || "YourLeadsPartner",
+  // Casing follows the logo wordmark: "Your" + "Leads" + "partner".
+  brandName: process.env.NEXT_PUBLIC_BRAND_NAME || "YourLeadspartner",
   brandStatus: "provisional" as const,
   descriptor: "Lead generation for IT companies",
   supportingLine: "Better conversations for IT companies.",

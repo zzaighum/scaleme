@@ -7,7 +7,7 @@ using the preview.
 
 ## Brand and legal identity
 
-- [ ] Run domain, trademark and company-register checks on "YourLeadsPartner"
+- [ ] Run domain, trademark and company-register checks on "YourLeadspartner"
       before launch. The name is now set as the build default, but no clearance
       search has been done on it — the brief's earlier naming research was a
       limited web screen (16 Sept 2026) covering different candidates entirely.
@@ -73,7 +73,7 @@ using the preview.
       funnel bands (100/60/30/10) and the floating cards (1,250 new leads, 375
       meetings booked, 89 deals closed, +72% pipeline) are reproduced from the
       Figma mockup so the build matches it one-to-one for review. They are not
-      real YourLeadsPartner results. They are gated on `siteMode === "preview"` in
+      real YourLeadspartner results. They are gated on `siteMode === "preview"` in
       `src/components/ProcessIllustration.tsx`, so switching
       `NEXT_PUBLIC_SITE_MODE` to `live` drops them automatically — but before
       launch, decide whether to replace them with real reported figures or
@@ -81,7 +81,7 @@ using the preview.
 - [ ] **Hero channel chips name channels we don't sell.** The funnel graphic
       labels five acquisition channels from the mockup (LinkedIn, Email,
       Website, Paid Ads, Referrals). Only email, LinkedIn and calling are
-      actually in scope; "Website" and "Paid Ads" are not services YourLeadsPartner
+      actually in scope; "Website" and "Paid Ads" are not services YourLeadspartner
       offers. Re-label these to the real four channels before launch.
 - [ ] Testimonials, case studies, and a team/founder module are all switched off
       (`testimonialsEnabled`, `caseStudiesEnabled`, `teamEnabled` in

@@ -30,9 +30,6 @@ export const metadata: Metadata = {
     siteConfig.siteMode === "preview"
       ? { index: false, follow: false }
       : { index: true, follow: true },
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
