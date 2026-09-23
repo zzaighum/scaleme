@@ -10,7 +10,7 @@ export function hashPayload(data: EnquiryData): string {
 }
 
 export function bucketKeyForIp(ip: string): string {
-  const salt = process.env.RECEIPT_SIGNING_SECRET || "scaleme-rate-limit";
+  const salt = process.env.RECEIPT_SIGNING_SECRET || "yourleadspartner-rate-limit";
   return createHash("sha256").update(`${salt}:${ip}`).digest("hex");
 }
 

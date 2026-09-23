@@ -1,10 +1,11 @@
-# ScaleMe — lead-generation agency website
+# YourLeadsPartner — lead-generation agency website
 
 Marketing website for an agency that sells lead-generation services to IT companies
 (cold email, LinkedIn outreach, cold calling, marketplace prospecting). Built from an
 internal website build brief (not included in this repo), with the homepage styled
-to match the team's Figma design. "ScaleMe" is a **provisional, unconfirmed** brand
-name — see [Branding](#branding-and-content-you-can-edit-centrally) below.
+to match the team's Figma design. The brand name is set centrally — see
+[Branding](#branding-and-content-you-can-edit-centrally) below. No domain or
+trademark clearance has been run on it yet (see `LAUNCH_CHECKLIST.md`).
 
 Stack: Next.js 16 (App Router) + TypeScript + Tailwind CSS v4, with Supabase Postgres
 as the durable enquiry store in live mode.

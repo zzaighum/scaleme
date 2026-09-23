@@ -218,7 +218,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why ScaleMe */}
+      {/* Why YourLeadsPartner */}
       <section className="bg-gradient-to-br from-primary to-dark py-14 text-white sm:py-20">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-start">

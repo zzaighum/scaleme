@@ -16,7 +16,7 @@ import { siteConfig } from "@/config/site";
  *
  * DEMO PLACEHOLDER DATA: the percentages and the figures in the floating
  * cards are reproduced from the Figma mockup so the implementation matches
- * it one-to-one. They are NOT real ScaleMe results. They only render while
+ * it one-to-one. They are NOT real YourLeadsPartner results. They only render while
  * the site is in preview mode (which also blocks indexing and shows the
  * site-wide "illustrative only" banner) — see LAUNCH_CHECKLIST.md before
  * switching NEXT_PUBLIC_SITE_MODE to "live".
