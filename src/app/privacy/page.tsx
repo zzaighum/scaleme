@@ -9,7 +9,10 @@ export const metadata: Metadata = {
 };
 
 const fields: { label: string; value: string }[] = [
-  { label: "Data controller", value: "To be confirmed — real business name pending." },
+  {
+    label: "Data controller",
+    value: `${siteConfig.businessIdentity.legalName ?? siteConfig.brandName}. Contact details below.`,
+  },
   {
     label: "Data collected",
     value: "Name, work email, company website, main IT service, goal/target market, and optional phone number submitted through the enquiry form.",
@@ -19,13 +22,22 @@ const fields: { label: string; value: string }[] = [
     value: "To respond to enquiries about the lead-generation programme and, where agreed, to arrange a strategy call.",
   },
   {
+    // Kept in step with what the site actually sends data to. Adding another
+    // destination means adding it here.
     label: "Service providers",
-    value: "To be confirmed — will name the durable storage and notification providers actually connected (e.g. Supabase) once live.",
+    value:
+      "Salesforce (receives enquiry form submissions and stores them as leads), Calendly (handles call bookings you choose to make), Google reCAPTCHA (checks the enquiry form for automated submissions), and Hostinger (hosts this website).",
   },
-  { label: "Retention", value: "To be confirmed by the business owner before launch." },
+  {
+    label: "Retention",
+    value:
+      "Enquiry details are kept for 24 months from your last contact with us, then deleted. You can ask for them to be deleted sooner.",
+  },
   {
     label: "Contact process",
-    value: "To be confirmed — a monitored contact channel will be published here before launch.",
+    value: siteConfig.businessIdentity.contactEmail
+      ? `Email ${siteConfig.businessIdentity.contactEmail} to ask what is held about you, to request a correction, or to ask for it to be deleted.`
+      : "To be confirmed — a monitored contact channel will be published here before launch.",
   },
 ];
 

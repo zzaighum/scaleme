@@ -1,0 +1,53 @@
+# Static export of this Next.js site (output: "export", trailingSlash: true),
+# served by Hostinger's shared stack (LiteSpeed, reads Apache directives).
+#
+# Next emits every route as <route>/index.html, so directory serving does the
+# routing — there is no rewrite to a server process, because there isn't one.
+
+DirectoryIndex index.html
+
+# Next writes its own styled 404 page; without this the host shows its default.
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS. Requires SSL to be active for the domain first — if the
+  # certificate is not yet issued, this redirects into a loop. Enable SSL in
+  # hPanel before uploading, or comment this block out until it is.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+# Next's generated OG image is written to `out/opengraph-image` with no file
+# extension, so the server has no extension to map and sends it with no usable
+# Content-Type. LinkedIn, Slack and X all reject an image that is not served as
+# one, which would mean no preview card on any shared link.
+<Files "opengraph-image">
+  ForceType image/png
+</Files>
+
+# Caching. Only `_next/static` filenames carry a content hash, so only those can
+# be frozen for a year. `/logo.svg`, `/logo-mark.svg` and `/icon.svg` live at
+# stable paths, and with the brand still provisional an immutable year would
+# mean a rebrand never reaching anyone who had already visited. HTML must never
+# be cached, or visitors keep seeing the previous deploy.
+<IfModule mod_headers.c>
+  SetEnvIf Request_URI "^/_next/static/" HASHED_ASSET=1
+
+  # Content-hashed build output: a new deploy writes new filenames.
+  Header set Cache-Control "public, max-age=31536000, immutable" env=HASHED_ASSET
+
+  # Stable-path assets served from the site root: one day.
+  <FilesMatch "\.(svg|png|jpg|jpeg|webp|avif|ico)$">
+    Header set Cache-Control "public, max-age=86400" env=!HASHED_ASSET
+  </FilesMatch>
+  <Files "opengraph-image">
+    Header set Cache-Control "public, max-age=86400"
+  </Files>
+
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>

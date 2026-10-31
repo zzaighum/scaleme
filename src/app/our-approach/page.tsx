@@ -23,7 +23,7 @@ export default function OurApproachPage() {
       <div className="mx-auto mt-16 max-w-[820px]">
         <h2 className="text-[28px] sm:text-[36px]">A campaign starts with a reason to reach out.</h2>
         <div className="mt-6 rounded-2xl border border-border bg-surface p-8">
-          <p className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent">
+          <p className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-text">
             {illustrativeLabel}
           </p>
           <dl className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -52,7 +52,7 @@ export default function OurApproachPage() {
       <div className="mx-auto mt-16 max-w-[820px]">
         <h2 className="text-[28px] sm:text-[36px]">What an account brief contains.</h2>
         <div className="mt-6 rounded-2xl border border-border bg-surface p-8">
-          <p className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent">
+          <p className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-text">
             {illustrativeLabel}
           </p>
           <dl className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -77,7 +77,7 @@ export default function OurApproachPage() {
       <div className="mx-auto mt-16 max-w-[820px]">
         <h2 className="text-[28px] sm:text-[36px]">What your sales team receives.</h2>
         <div className="mt-6 rounded-2xl border border-border bg-surface p-8">
-          <p className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent">
+          <p className="inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-text">
             {illustrativeLabel}
           </p>
           <dl className="mt-6 grid gap-5 sm:grid-cols-2">

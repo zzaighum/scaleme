@@ -13,6 +13,7 @@ export type MainItService = (typeof MAIN_IT_SERVICE_OPTIONS)[number];
 export type EnquiryInput = {
   fullName: string;
   workEmail: string;
+  companyName: string;
   companyWebsite: string;
   mainItService: string;
   goal: string;
@@ -22,6 +23,7 @@ export type EnquiryInput = {
 export type EnquiryData = {
   fullName: string;
   workEmail: string;
+  companyName: string;
   companyWebsite: string;
   mainItService: MainItService;
   goal: string;
@@ -52,14 +54,25 @@ export function normaliseWebsite(raw: string): string | null {
 export function validateEnquiry(input: Partial<EnquiryInput>): ValidationResult {
   const errors: Partial<Record<keyof EnquiryInput, string>> = {};
 
+  // 80 is Salesforce's Lead.LastName column, which this maps to. Rejecting
+  // here beats Salesforce truncating or dropping the record server-side.
   const fullName = (input.fullName ?? "").trim();
-  if (fullName.length < 2 || fullName.length > 100) {
-    errors.fullName = "Enter your full name (2–100 characters).";
+  if (fullName.length < 2 || fullName.length > 80) {
+    errors.fullName = "Enter your full name (2–80 characters).";
   }
 
+  // Salesforce's Lead.Email is 80 characters, shorter than the RFC maximum.
   const workEmail = (input.workEmail ?? "").trim();
-  if (!workEmail || workEmail.length > 254 || !EMAIL_RE.test(workEmail)) {
+  if (!workEmail || workEmail.length > 80 || !EMAIL_RE.test(workEmail)) {
     errors.workEmail = "Enter a valid work email address.";
+  }
+
+  // Salesforce's Lead object requires Company, and a website is not a company
+  // name. Collecting it is also better qualification data than deriving
+  // "acme-it.com" from the domain.
+  const companyName = (input.companyName ?? "").trim();
+  if (companyName.length < 2 || companyName.length > 255) {
+    errors.companyName = "Enter your company name (2–255 characters).";
   }
 
   const normalisedWebsite = normaliseWebsite(input.companyWebsite ?? "");
@@ -96,6 +109,7 @@ export function validateEnquiry(input: Partial<EnquiryInput>): ValidationResult 
     data: {
       fullName,
       workEmail,
+      companyName,
       companyWebsite: normalisedWebsite as string,
       mainItService,
       goal,

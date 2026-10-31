@@ -13,10 +13,13 @@ export const primaryNav: NavLink[] = [
   { label: "About", href: "/about" },
 ];
 
+// Pricing is deliberately absent here: it has its own top-level item above, and
+// listing it in both places put one destination in the same menu twice under two
+// different labels ("Pricing" and "Pricing & Engagement"). The footer still
+// groups it under Services, where it appears only once.
 export const servicesDropdown: NavLink[] = [
   { label: "Overview", href: "/services" },
   ...channels.map((c) => ({ label: c.navLabel, href: `/services/${c.slug}` })),
-  { label: "Pricing & Engagement", href: "/pricing" },
 ];
 
 export const footerServicesLinks: NavLink[] = [

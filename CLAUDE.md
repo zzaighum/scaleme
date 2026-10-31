@@ -2,13 +2,26 @@
 
 # Project context
 
-Marketing site for **YourLeadspartner**, a lead-generation agency selling to IT
+Marketing site for **Your Leads Partner**, a lead-generation agency selling to IT
 companies. Next.js 16 (App Router) + TypeScript + Tailwind v4, Supabase Postgres
 for enquiry storage in live mode. Repo: https://github.com/zzaighum/scaleme
 (repo name still says `scaleme`, the previous brand name).
 
 Read `README.md` for setup/architecture and `LAUNCH_CHECKLIST.md` for open
 launch blockers. Brand, site mode and CTA labels all live in `src/config/site.ts`.
+
+## Brand name
+
+The brand is **Your Leads Partner** — three capitalised words, renamed from the
+single-word "YourLeadspartner" on 26 Oct 2026. It lives in one place,
+`siteConfig.brandName`, and the wordmark is set from it as HTML text in
+`src/components/Logo.tsx`.
+
+`public/logo.svg` is the **old** wordmark, kept only as a reference: its
+letterforms are 13 vector paths spelling the previous name, so it cannot be
+edited to say anything else and nothing renders it any more.
+`public/logo-mark.svg` is the symbol, still in use. A designed wordmark for the
+new name would replace the text in `Logo.tsx`.
 
 ## Current state
 
@@ -17,17 +30,28 @@ launch blockers. Brand, site mode and CTA labels all live in `src/config/site.ts
 - Site runs in **preview mode** by default: "illustrative only" banner shown,
   `robots.txt` disallows all, enquiry form stores nothing.
 
-## Next task: deploy to Hostinger
+## Deployment: two branches, two shapes
 
-Not started. Needs **Business Web Hosting** or a **Cloud** plan (basic/shared
-can't run Node). Hostinger builds with `npm run build` and applies
-`output: 'standalone'` itself — do not set that in `next.config.ts`.
-Full steps and the environment-variable table are in README → Deployment.
+The Hostinger account (`abdullahsheikh18@gmail.com`, accessed via collaborator
+login) is on the **Single** plan, which cannot run Node. So there are two shapes:
 
-A Hostinger MCP connector was expected but has never been visible to a session
-here. Check with `session_connectors_status` before assuming it exists; if it's
-absent, deployment is done by the user in hPanel (GitHub deploy is wired up and
-the repo is pushed).
+- `main` — Node server. Needs Business/Cloud/VPS. Hostinger builds with
+  `npm run build` and applies `output: 'standalone'` itself — do not set that in
+  `next.config.ts`.
+- `static-export-hostinger` — `output: "export"` to `out/`, uploaded to
+  `public_html`. Deployable on the current plan. `src/app/api/*` is deleted
+  there, so the enquiry form captures nothing until
+  `NEXT_PUBLIC_FORM_ENDPOINT` points at a CRM. The owner intends to wire a CRM
+  in later; that variable is the single swap point.
+
+Full comparison table and the environment-variable table are in
+README → Deployment.
+
+The Hostinger MCP connector is installed on the account and works in claude.ai
+chat, but as of 24 Sept 2026 it only ever reached a Code session as status
+`pending` — never `connected`, so its tools were never callable here. Check
+`session_connectors_status` rather than assuming either way. The working route
+was the **Claude in Chrome** extension driving hPanel directly.
 
 `NEXT_PUBLIC_*` values are baked in at build time — they must be set in the host
 before the first build, and changing one needs a redeploy.
@@ -45,8 +69,21 @@ This site must not carry invented proof. Specifically excluded, deliberately:
 - Invented pricing tiers, dollar figures or scarcity claims — pricing is
   quote-based.
 
-The hero funnel figures (100/60/30/10 percentages, 1,250 leads, 375 meetings,
-89 deals, +72% pipeline) are Figma mockup placeholders reproduced for design
-review. They are gated on `siteMode === "preview"` in
-`src/components/ProcessIllustration.tsx` and disappear in live mode. Keep that
-gate intact; if real figures ever replace them, they need a real source.
+The hero funnel now carries **real figures** (26 Oct 2026), so the old
+`siteMode === "preview"` gate is gone — these belong on the live site:
+
+- **113 contacted** — the 120 lead records in Salesforce less eight named
+  "Unknown" (four with no contact details at all), two test rows and the
+  owner's own record.
+- **10 meetings booked, 5 closed** — counted by hand from email and Telegram,
+  which is where those conversations happened.
+- Period March–October 2026, stated in the figure's caption.
+
+The mockup's other numbers (1,250 leads, 375 meetings, 89 deals, the "vs last
+month" deltas and "+72% pipeline value") are **deleted**, not gated: no prior
+period was ever recorded, so nothing could support them. The "Qualified" band
+went too — every Salesforce lead is still at status "New", so there was no
+number to put in it.
+
+Any change to these needs the same treatment: a real source, and the basis
+shown on screen.

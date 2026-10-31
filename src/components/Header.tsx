@@ -1,16 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { primaryNav, servicesDropdown } from "@/data/nav";
 import { siteConfig } from "@/config/site";
 import { ButtonLink } from "./Button";
+import { Logo } from "./Logo";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+// Only the Services routes light up the Services trigger. /pricing/ has its own
+// top-level item, and marking both left two `aria-current="page"` elements in
+// one nav, so neither the eye nor a screen reader could tell which section the
+// visitor was in.
+function isServicesSection(pathname: string) {
+  return isActive(pathname, "/services");
 }
 
 export function Header() {
@@ -19,7 +27,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const servicesTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileTriggerRef = useRef<HTMLButtonElement>(null);
-  const servicesActive = isActive(pathname, "/services") || isActive(pathname, "/pricing");
+  const servicesActive = isServicesSection(pathname);
 
   // Close any open overlay when navigating, without an effect: this follows
   // React's "adjust state during render" pattern for resetting on prop change.
@@ -48,20 +56,29 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-surface/95 backdrop-blur">
-      <div className="mx-auto flex h-24 max-w-[1280px] items-center justify-between gap-4 px-5 sm:px-6 xl:gap-8">
-        <Link href="/" className="flex shrink-0 items-center" aria-label={`${siteConfig.brandName} home`}>
-          <Image
-            src="/logo.svg"
-            alt={siteConfig.brandName}
-            width={2196}
-            height={353}
-            priority
-            unoptimized
-            className="h-7 w-auto sm:h-8 xl:h-9"
+      {/* Between roughly 1024px and 1085px this row wraps to two lines and the
+          header grows to ~117px: the wordmark, nav and CTA need about 1056px
+          and there isn't room. Reviewed and deliberately left alone (owner,
+          26 Oct 2026) — nothing overflows or becomes unreachable, and the band
+          is ~60px wide. Don't "fix" it without asking.
+
+          `min-h-24` rather than a fixed `h-24`, and the row is allowed to wrap:
+          the nav and CTA are sized in rem, so at 200% text they needed 2265px
+          of a 1280px viewport and pushed the CTA off screen. Wrapping trades a
+          taller header for keeping every control reachable (WCAG 1.4.4). */}
+      <div className="mx-auto flex min-h-24 max-w-[1280px] flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-2 sm:px-6 xl:gap-x-8">
+        <Link
+          href="/"
+          className="flex min-h-[44px] shrink-0 items-center"
+          aria-label={`${siteConfig.brandName} home`}
+        >
+          <Logo
+            markClassName="h-5 w-auto sm:h-6 xl:h-7"
+            textClassName="text-lg sm:text-xl xl:text-[22px]"
           />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-5 lg:flex xl:gap-8">
+        <nav aria-label="Primary" className="hidden flex-wrap items-center gap-x-5 gap-y-1 lg:flex xl:gap-x-8">
           <div
             className="relative"
             onMouseEnter={() => setServicesOpen(true)}
@@ -72,8 +89,15 @@ export function Header() {
               type="button"
               aria-expanded={servicesOpen}
               aria-haspopup="true"
-              onClick={() => setServicesOpen((v) => !v)}
-              className={`flex min-h-[44px] items-center gap-1 whitespace-nowrap text-base font-medium ${
+              onClick={() => setServicesOpen(true)}
+              onKeyDown={(e) => {
+                // Keyboard users get a real toggle; they never hovered first.
+                if (e.key === " " || e.key === "Enter") {
+                  e.preventDefault();
+                  setServicesOpen((v) => !v);
+                }
+              }}
+              className={`flex min-h-[44px] items-center gap-1 text-base font-medium ${
                 servicesActive ? "text-primary" : "text-ink"
               }`}
               aria-current={servicesActive ? "page" : undefined}
@@ -102,7 +126,7 @@ export function Header() {
               key={item.href}
               href={item.href}
               aria-current={isActive(pathname, item.href) ? "page" : undefined}
-              className={`whitespace-nowrap text-base font-medium ${
+              className={`flex min-h-[44px] items-center text-base font-medium ${
                 isActive(pathname, item.href) ? "text-primary" : "text-ink"
               }`}
             >
@@ -112,7 +136,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <ButtonLink href="/book-a-call" className="whitespace-nowrap px-5">
+          <ButtonLink href="/book-a-call" className="px-5 text-center">
             {siteConfig.primaryCta}
           </ButtonLink>
         </div>

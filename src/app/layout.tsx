@@ -41,7 +41,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <PreviewBanner />
         <Header />
-        <main id="main-content" className="flex-1">
+        {/* tabIndex={-1} is what makes the skip link actually skip: a plain #id
+            target is not focusable, so activating the link moved the viewport
+            but left focus on <body>, and the next Tab went back to the header. */}
+        <main id="main-content" tabIndex={-1} className="flex-1">
           {children}
         </main>
         <Footer />

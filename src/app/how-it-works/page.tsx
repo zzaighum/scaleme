@@ -21,6 +21,7 @@ export default function HowItWorksPage() {
 
       <div className="mt-16">
         <ProcessSteps
+          headingLevel={2}
           steps={[
             {
               title: "Align",

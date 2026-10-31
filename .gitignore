@@ -62,3 +62,8 @@ Thumbs.db
 # supabase CLI local state
 supabase/.branches
 supabase/.temp
+
+# QA harness (UI/UX pass) — not part of the shipped site
+/test-results/
+/playwright-report/
+/qa-artifacts/

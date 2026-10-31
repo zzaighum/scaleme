@@ -29,7 +29,7 @@ export function AgendaPanel() {
   );
 }
 
-export function SchedulerPanel({ leadReceipt }: { leadReceipt?: string }) {
+export function SchedulerPanel() {
   if (siteConfig.siteMode === "preview") {
     return (
       <Notice tone="info" title={`Choose a ${siteConfig.callDurationMinutes}-minute strategy call`}>
@@ -57,9 +57,10 @@ export function SchedulerPanel({ leadReceipt }: { leadReceipt?: string }) {
     return null;
   }
 
-  const href = leadReceipt
-    ? `/api/booking-click?lead=${encodeURIComponent(leadReceipt)}`
-    : "/api/booking-click";
+  // The static build has no `/api/booking-click` to record the click through,
+  // so this goes straight to the scheduler. Click tracking, if it is wanted
+  // later, has to come from the scheduler's own analytics.
+  const href = siteConfig.bookingUrl;
 
   return (
     <div className="rounded-2xl border border-border bg-surface p-8 text-center">
