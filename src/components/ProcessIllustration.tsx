@@ -1,22 +1,20 @@
 import {
   UsersIcon,
-  SearchIcon,
   CalendarIcon,
   HandshakeIcon,
   DollarIcon,
   ShareIcon,
   MailIcon,
-  GlobeIcon,
-  TargetIcon,
+  PhoneIcon,
+  StorefrontIcon,
 } from "./Icon";
-import { siteConfig } from "@/config/site";
 
 /**
  * Hero funnel graphic, matched to the Figma hero frame (node 2:2).
  *
  * DEMO PLACEHOLDER DATA: the percentages and the figures in the floating
  * cards are reproduced from the Figma mockup so the implementation matches
- * it one-to-one. They are NOT real YourLeadspartner results. They only render while
+ * it one-to-one. They are NOT real Your Leads Partner results. They only render while
  * the site is in preview mode (which also blocks indexing and shows the
  * site-wide "illustrative only" banner) — see LAUNCH_CHECKLIST.md before
  * switching NEXT_PUBLIC_SITE_MODE to "live".
@@ -25,48 +23,63 @@ import { siteConfig } from "@/config/site";
 const CX = 228;
 
 // Funnel boundaries, top to bottom: y, horizontal radius, ellipse depth.
+// Three bands, not four: nothing records a "qualified" step between first
+// contact and a booked meeting, so there is no number to put in one.
 const BOUNDS = [
   { y: 140, rx: 162, ry: 30 },
-  { y: 218, rx: 128, ry: 24 },
-  { y: 282, rx: 99, ry: 18 },
-  { y: 336, rx: 74, ry: 14 },
+  { y: 222, rx: 120, ry: 23 },
+  { y: 304, rx: 86, ry: 16 },
   { y: 384, rx: 52, ry: 10 },
 ];
 
+/*
+ * Real counts, not percentages. 113 is the 120 lead records in Salesforce less
+ * eight named "Unknown" (four with no contact details at all), two test rows
+ * and the owner's own record. Meetings and closes were counted by hand from
+ * email and Telegram, which is where those conversations happened.
+ *
+ * Percentages were considered and rejected: 9% to meeting and 4% to close read
+ * worse than the counts do, and they hide the figure that matters, which is
+ * five closed from ten meetings.
+ */
 const BANDS = [
-  { id: "bandLeads", edge: "#0d4038", mid: "#1a6153", lip: "#0c3f37", label: "Leads", value: "100%", text: "#ffffff", Icon: UsersIcon, textY: 190, iconDx: -108, labelDx: -84, valueDx: 132 },
-  { id: "bandQualified", edge: "#17795b", mid: "#29a37d", lip: "#178160", label: "Qualified", value: "60%", text: "#ffffff", Icon: SearchIcon, textY: 255, iconDx: -84, labelDx: -60, valueDx: 104 },
-  { id: "bandMeetings", edge: "#55a888", mid: "#74c8a4", lip: "#55ab89", label: "Meetings", value: "30%", text: "#0f3f36", Icon: CalendarIcon, textY: 312, iconDx: -62, labelDx: -40, valueDx: 80 },
-  { id: "bandClosed", edge: "#b2dbc6", mid: "#d4f0e1", lip: "#b0dbc6", label: "Closed", value: "10%", text: "#0f3f36", Icon: HandshakeIcon, textY: 362, iconDx: -44, labelDx: -24, valueDx: 58 },
+  { id: "bandContacted", edge: "#0d4038", mid: "#1a6153", lip: "#0c3f37", label: "Contacted", value: "113", text: "#ffffff", Icon: UsersIcon, textY: 188, iconDx: -108, labelDx: -84, valueDx: 120 },
+  { id: "bandMeetings", edge: "#55a888", mid: "#74c8a4", lip: "#55ab89", label: "Meetings", value: "10", text: "#0f3f36", Icon: CalendarIcon, textY: 270, iconDx: -74, labelDx: -50, valueDx: 84 },
+  { id: "bandClosed", edge: "#b2dbc6", mid: "#d4f0e1", lip: "#b0dbc6", label: "Closed", value: "5", text: "#0f3f36", Icon: HandshakeIcon, textY: 352, iconDx: -46, labelDx: -24, valueDx: 52 },
 ];
 
+// The four channels actually sold. The Figma mockup showed five — Website,
+// Paid Ads and Referrals among them — none of which are services on offer, and
+// it omitted two that are. `w` exists because "Marketplaces" does not fit the
+// 54px square the shorter labels use.
 const CHANNEL_CHIPS = [
-  { label: "LinkedIn", x: 14, y: 80, Icon: ShareIcon, to: { x: 118, y: 126 } },
-  { label: "Email", x: 94, y: 44, Icon: MailIcon, to: { x: 156, y: 118 } },
-  { label: "Website", x: 182, y: 22, Icon: GlobeIcon, to: { x: 206, y: 111 } },
-  { label: "Paid Ads", x: 270, y: 20, Icon: TargetIcon, to: { x: 266, y: 112 } },
-  { label: "Referrals", x: 350, y: 44, Icon: UsersIcon, to: { x: 316, y: 122 } },
+  { label: "Email", x: 26, y: 74, w: 54, Icon: MailIcon, to: { x: 128, y: 118 } },
+  { label: "LinkedIn", x: 130, y: 30, w: 58, Icon: ShareIcon, to: { x: 186, y: 111 } },
+  { label: "Calling", x: 256, y: 30, w: 54, Icon: PhoneIcon, to: { x: 270, y: 111 } },
+  { label: "Marketplaces", x: 352, y: 74, w: 74, Icon: StorefrontIcon, to: { x: 328, y: 118 } },
 ];
 
-const STAT_CARDS = [
-  { y: 262, Icon: UsersIcon, value: "1,250", label: "New Leads", delta: "↑ 40%" },
-  { y: 320, Icon: CalendarIcon, value: "375", label: "Meetings Booked", delta: "↑ 52%" },
-  { y: 378, Icon: HandshakeIcon, value: "89", label: "Deals Closed", delta: "↑ 28%" },
-];
-
-const CARD_X = 374;
-
-const PIPELINE_BARS = [12, 18, 23, 30, 38, 47];
+// The floating stat cards and the "+72% pipeline value" card are gone. Their
+// "vs last month" deltas needed a prior period that was never recorded, and
+// the pipeline figure had nothing behind it at all.
 
 export function ProcessIllustration() {
-  // Hard gate: the mockup figures exist only in preview. Flipping
-  // NEXT_PUBLIC_SITE_MODE to "live" drops them rather than publishing
-  // invented numbers, and re-centres the funnel to fill the space.
-  const showDemoFigures = siteConfig.siteMode === "preview";
-  const dx = showDemoFigures ? 0 : 72;
+  // No preview gate any more: every number here is counted from real records,
+  // so it belongs on the live site too. The +72px shift centres the funnel on
+  // the backdrop circle now that the floating cards are gone.
+  const dx = 72;
 
   return (
     <figure className="w-full">
+      <MobileFunnel />
+
+      {/* The SVG scales with its container, and so does every fontSize in it.
+          At 390px the viewBox renders at 0.565x, which put the channel labels
+          at 4.8 CSS px and the card captions at 3.7 — unreadable. Rather than
+          fight the scale, the phone gets the stacked version above and the
+          drawing starts at the `md` breakpoint, where the smallest label is
+          back above 9px. */}
+      <div className="hidden md:block">
       <svg
         viewBox="0 0 620 580"
         role="img"
@@ -75,9 +88,7 @@ export function ProcessIllustration() {
         style={{ fontFamily: "var(--font-heading), ui-sans-serif, system-ui, sans-serif" }}
       >
         <title id="hero-funnel-title">
-          {showDemoFigures
-            ? "An illustrative pipeline funnel: LinkedIn, email, website, paid ads, and referrals feed into leads, which narrow to qualified prospects, then booked meetings, then closed deals and revenue growth. The figures shown are mockup placeholders, not real results."
-            : "A pipeline funnel: LinkedIn, email, website, paid ads, and referrals feed into leads, which narrow to qualified prospects, then booked meetings, then closed deals and revenue growth."}
+          {"A pipeline funnel: email, LinkedIn, calling and marketplace prospecting feed 113 contacted prospects, which narrow to 10 booked meetings and 5 closed deals worth about $100,000 in combined contract value. Counted from our own records, March to October 2026."}
         </title>
 
         <defs>
@@ -110,20 +121,20 @@ export function ProcessIllustration() {
         {CHANNEL_CHIPS.map((chip) => (
           <g key={chip.label}>
             <path
-              d={`M ${chip.x + 27} ${chip.y + 56} Q ${chip.x + 27} ${chip.y + 86}, ${chip.to.x} ${chip.to.y}`}
+              d={`M ${chip.x + chip.w / 2} ${chip.y + 56} Q ${chip.x + chip.w / 2} ${chip.y + 86}, ${chip.to.x} ${chip.to.y}`}
               fill="none"
               stroke="#0f4d42"
               strokeWidth="1.8"
               markerEnd="url(#arrowHead)"
             />
-            <rect x={chip.x} y={chip.y} width="54" height="54" rx="12" fill="#ffffff" />
-            <foreignObject x={chip.x + 17} y={chip.y + 8} width="20" height="20">
+            <rect x={chip.x} y={chip.y} width={chip.w} height="54" rx="12" fill="#ffffff" />
+            <foreignObject x={chip.x + chip.w / 2 - 10} y={chip.y + 8} width="20" height="20">
               <div className="flex h-5 w-5 items-center justify-center text-primary">
                 <chip.Icon className="h-[18px] w-[18px]" />
               </div>
             </foreignObject>
             <text
-              x={chip.x + 27}
+              x={chip.x + chip.w / 2}
               y={chip.y + 44}
               textAnchor="middle"
               fontSize="8.5"
@@ -175,19 +186,17 @@ export function ProcessIllustration() {
             <text x={CX + band.labelDx} y={band.textY} fontSize="15" fontWeight="600" fill={band.text}>
               {band.label}
             </text>
-            {showDemoFigures ? (
-              <text
-                x={CX + band.valueDx}
-                y={band.textY}
-                textAnchor="end"
-                fontSize="13"
-                fontWeight="600"
-                fill={band.text}
-                opacity="0.92"
-              >
-                {band.value}
-              </text>
-            ) : null}
+            <text
+              x={CX + band.valueDx}
+              y={band.textY}
+              textAnchor="end"
+              fontSize="13"
+              fontWeight="600"
+              fill={band.text}
+              opacity="0.92"
+            >
+              {band.value}
+            </text>
           </g>
         ))}
 
@@ -201,83 +210,83 @@ export function ProcessIllustration() {
           </div>
         </foreignObject>
         <text x="192" y="449" fontSize="15" fontWeight="700" fill="#0f3f36">
-          Revenue Growth
+          ~$100k deal value
         </text>
         </g>
 
-        {/* Floating metric cards — mockup figures, preview mode only. */}
-        {showDemoFigures ? STAT_CARDS.map((card) => (
-          <g key={card.label}>
-            <rect x={CARD_X} y={card.y} width="208" height="50" rx="10" fill="#ffffff" stroke="#e4ece8" />
-            <rect x={CARD_X + 12} y={card.y + 12} width="26" height="26" rx="7" fill="#e3f3ec" />
-            <foreignObject x={CARD_X + 17} y={card.y + 17} width="16" height="16">
-              <div className="flex h-4 w-4 items-center justify-center text-primary">
-                <card.Icon className="h-[14px] w-[14px]" />
-              </div>
-            </foreignObject>
-            <text x={CARD_X + 48} y={card.y + 26} fontSize="16" fontWeight="700" fill="#114f44">
-              {card.value}
-            </text>
-            <text x={CARD_X + 48} y={card.y + 39} fontSize="8.5" fill="#6b7c76">
-              {card.label}
-            </text>
-            <text x={CARD_X + 196} y={card.y + 23} textAnchor="end" fontSize="9.5" fontWeight="700" fill="#1f8f6d">
-              {card.delta}
-            </text>
-            <text x={CARD_X + 196} y={card.y + 35} textAnchor="end" fontSize="7.5" fill="#9aa8a3">
-              vs last month
-            </text>
-          </g>
-        )) : null}
 
-        {/* pipeline growth card — mockup figures, preview mode only. */}
-        {showDemoFigures ? (
-        <g>
-          <rect x={CARD_X} y="436" width="208" height="86" rx="10" fill="#ffffff" stroke="#e4ece8" />
-          <text x={CARD_X + 12} y="454" fontSize="9" fontWeight="700" fill="#4a5a55">
-            Pipeline Growth
-          </text>
-          {PIPELINE_BARS.map((height, i) => (
-            <rect
-              key={height}
-              x={CARD_X + 14 + i * 17}
-              y={510 - height}
-              width="11"
-              height={height}
-              rx="3"
-              fill={i >= PIPELINE_BARS.length - 2 ? "#1f8f6d" : "#9ed4bb"}
-            />
-          ))}
-          <path
-            d={`M ${CARD_X + 14} 492 L ${CARD_X + 48} 478 L ${CARD_X + 78} 466 L ${CARD_X + 114} 452`}
-            fill="none"
-            stroke="#1f8f6d"
-            strokeWidth="2"
-            markerEnd="url(#arrowHeadDown)"
-          />
-          <rect x={CARD_X + 124} y="462" width="74" height="46" rx="9" fill="#d7f0e3" />
-          <text x={CARD_X + 161} y="482" textAnchor="middle" fontSize="14" fontWeight="700" fill="#114f44">
-            +72%
-          </text>
-          <text x={CARD_X + 161} y="492" textAnchor="middle" fontSize="6.5" fill="#4a7a68">
-            Pipeline Value
-          </text>
-          <text x={CARD_X + 161} y="501" textAnchor="middle" fontSize="6.5" fill="#4a7a68">
-            in 3 Months
-          </text>
-        </g>
-        ) : null}
       </svg>
 
-      {/* Text equivalent for screen readers and no-JS contexts */}
+      {/* Text equivalent for screen readers. Scoped to the same breakpoint as
+          the drawing: below `md` the stacked version is already real text, and
+          a second copy would just be read out twice. */}
       <p className="sr-only">
-        Pipeline diagram. Five acquisition channels — LinkedIn, email, website, paid ads and
-        referrals — feed a funnel that narrows from leads, to qualified prospects, to booked
-        meetings, to closed deals, and then to revenue growth.
-        {showDemoFigures
-          ? " All figures shown are mockup placeholders and do not represent real results."
-          : ""}
+        Pipeline diagram. Four outreach channels — email, LinkedIn, calling and marketplace
+        prospecting — feed 113 contacted prospects, narrowing to 10 booked meetings and 5
+        closed deals worth about $100,000 in combined contract value.
       </p>
+      </div>
+
+      <figcaption className="mt-4 text-center text-sm leading-6 text-muted-ink">
+        Direct outreach by email, LinkedIn, calling and marketplace prospecting, March to
+        October 2026. Contacts counted from our CRM; meetings and closes counted from our
+        own correspondence. Deal value is the combined contract value of the five closed
+        deals, not revenue billed.
+      </figcaption>
     </figure>
+  );
+}
+
+/**
+ * The phone rendering of the same pipeline: the five channels as chips, the
+ * four funnel stages as rows that inset as they narrow, and the revenue end
+ * state. Same data as the SVG, at type sizes a person can actually read.
+ */
+function MobileFunnel() {
+  return (
+    <div className="md:hidden">
+      <ul className="flex flex-wrap justify-center gap-2">
+        {CHANNEL_CHIPS.map((chip) => (
+          <li key={chip.label}>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-sm font-medium text-ink">
+              <chip.Icon className="h-4 w-4 text-primary" />
+              {chip.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <p className="mt-4 text-center text-sm text-muted-ink">
+        feed one qualified pipeline
+        <span aria-hidden="true" className="mt-1 block text-primary">
+          ↓
+        </span>
+      </p>
+
+      <ol className="mt-2 flex flex-col gap-2">
+        {BANDS.map((band, index) => (
+          <li
+            key={band.id}
+            className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3"
+            style={{ marginInline: index * 10 }}
+          >
+            <span className="flex items-center gap-2.5 text-base font-semibold text-ink">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <band.Icon className="h-4 w-4" />
+              </span>
+              {band.label}
+            </span>
+            <span className="text-base font-semibold text-muted-ink">{band.value}</span>
+          </li>
+        ))}
+      </ol>
+
+      <p className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-base font-semibold text-white">
+        <DollarIcon className="h-4 w-4" />
+        ~$100k deal value
+      </p>
+
+
+    </div>
   );
 }

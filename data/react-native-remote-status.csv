@@ -1,0 +1,7 @@
+company,role,remote_status,location,salary,verdict_for_staff_aug
+Tapcart,Sr. React Native Engineer,REMOTE,"Santa Monica, CA — Location Type: Remote","$175,000 - $350,000 + equity + bonus",Best fit — fully remote and mobile is the product
+Nectar,"Member of Technical Staff, Mobile (React Native)",REMOTE,"Remote - USA (a separate Palo Alto/NYC hybrid version also exists)","$200,000 - $300,000 + equity",Good fit — target the Remote-USA listing not the hybrid one
+Angel,Senior Mobile App Engineer (React Native),PARTIAL,"Provo, UT — 'Hybrid/Remote options available'","$160,000 - $175,000",Possible — remote is an option not the default
+Abby Care,Senior Mobile Engineer (React Native),NOT REMOTE,"San Francisco — Hybrid","$170,000 - $240,000",Weak — hybrid SF
+Skydio,"Senior Software Engineer, React Native",NOT REMOTE,"San Mateo, CA — Full-time, no remote flag",not posted,Weak — on-site
+Hiya Inc.,"Senior Mobile Engineer, Kotlin and Cross-Platform",NOT REMOTE,"Seattle, US — Hybrid","$170,000 - $228,000 + equity",Weak — hybrid, and Kotlin not React Native

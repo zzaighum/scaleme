@@ -24,7 +24,10 @@ export default function ServicesPage() {
 
       <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
         <ButtonLink href="/book-a-call">Book a Strategy Call</ButtonLink>
-        <Link href="/how-it-works" className="font-semibold text-primary underline underline-offset-4">
+        <Link
+          href="/how-it-works"
+          className="inline-flex min-h-[44px] items-center font-semibold text-primary underline underline-offset-4"
+        >
           How It Works
         </Link>
       </div>
@@ -33,6 +36,7 @@ export default function ServicesPage() {
         {channels.map((channel) => (
           <ChannelCard
             key={channel.slug}
+            headingLevel={2}
             slug={channel.slug}
             title={channel.cardTitle}
             body={channel.cardBody}
@@ -106,7 +110,10 @@ export default function ServicesPage() {
           body="We will discuss your current approach and identify the work needed to support it."
         />
         <p className="mt-6 text-center">
-          <Link href="/pricing" className="font-semibold text-primary underline underline-offset-4">
+          <Link
+            href="/pricing"
+            className="inline-flex min-h-[44px] items-center font-semibold text-primary underline underline-offset-4"
+          >
             Pricing & Engagement →
           </Link>
         </p>

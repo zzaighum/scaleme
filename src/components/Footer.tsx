@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   footerServicesLinks,
   footerMethodologyLinks,
@@ -7,15 +6,21 @@ import {
   footerLegalLinks,
 } from "@/data/nav";
 import { siteConfig } from "@/config/site";
+import { Logo } from "./Logo";
 
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-wide text-muted-ink">{title}</p>
-      <ul className="mt-4 flex flex-col gap-3">
+      {/* inline-flex + min-h-[44px] rather than gap alone: these were 17px-tall
+          targets on a phone, well under the 44px this codebase aims for. */}
+      <ul className="mt-2 flex flex-col">
         {links.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className="text-sm text-ink hover:text-primary">
+            <Link
+              href={link.href}
+              className="inline-flex min-h-[44px] items-center text-sm text-ink hover:text-primary"
+            >
               {link.label}
             </Link>
           </li>
@@ -35,14 +40,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1200px] px-5 py-14 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))]">
           <div>
-            <Image
-              src="/logo.svg"
-              alt={siteConfig.brandName}
-              width={2196}
-              height={353}
-              unoptimized
-              className="h-8 w-auto"
-            />
+            <Logo markClassName="h-6 w-auto" textClassName="text-xl" />
             <p className="mt-3 max-w-[34ch] text-sm leading-6 text-muted-ink">
               We help IT companies reach relevant buyers through focused research, coordinated
               outreach, and clear qualification.

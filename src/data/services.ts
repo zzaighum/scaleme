@@ -113,7 +113,7 @@ export const channels: ServiceChannel[] = [
     ],
     boundary:
       "The proposal identifies the platforms, account owner, permitted access, submission responsibilities, and platform costs. A submitted proposal is not a qualified lead, and project awards are not guaranteed. Keep marketplace communication and contracting within the relevant platform's rules.",
-    titleTag: "Marketplace Prospecting for IT Companies",
+    titleTag: "Marketplace Prospecting for IT Firms",
   },
 ];
 

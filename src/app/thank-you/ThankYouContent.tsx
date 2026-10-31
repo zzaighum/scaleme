@@ -18,18 +18,27 @@ export function ThankYouContent() {
   const sent = searchParams.get("sent") === "1";
   const confirmed = demo || sent;
 
+  // Reached directly rather than through the form. The prerendered fallback
+  // shows a confirmation, so this replaces it — keeping the same shell and
+  // offering a route back rather than leaving a dead end (and, incidentally,
+  // keeping the swap close enough in height not to throw the layout about).
   if (!confirmed) {
     return (
-      <div className="mx-auto max-w-[640px] px-5 py-24 text-center sm:px-6">
-        <h1 className="text-[32px]">No enquiry confirmation to display</h1>
-        <p className="mt-4 text-lg leading-8 text-muted-ink">
-          We couldn&apos;t find a confirmed enquiry for this page. If you just submitted the form,
-          please try again from{" "}
-          <a href="/book-a-call/" className="text-primary underline underline-offset-4">
-            Book a Strategy Call
-          </a>
-          .
+      <div className="mx-auto max-w-[720px] px-5 py-24 text-center sm:px-6">
+        <h1 className="text-[32px] sm:text-[40px]">No enquiry confirmation to display.</h1>
+        <p className="mt-5 text-lg leading-8 text-muted-ink">
+          We couldn&apos;t find a confirmed enquiry for this page. If you have just submitted the
+          form, please send it again.
         </p>
+        <div className="mt-12 text-left">
+          <Notice tone="neutral" title="Start from the enquiry form">
+            Share a short brief on{" "}
+            <a href="/book-a-call/" className="text-primary underline underline-offset-4">
+              Book a Strategy Call
+            </a>{" "}
+            and you will land back here with your confirmation.
+          </Notice>
+        </div>
       </div>
     );
   }
@@ -41,7 +50,7 @@ export function ThankYouContent() {
   return (
     <div className="mx-auto max-w-[720px] px-5 py-24 text-center sm:px-6">
       {isIllustrative ? (
-        <p className="mb-6 inline-block rounded-full bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-accent">
+        <p className="mb-6 inline-block rounded-full bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-accent-text">
           Illustrative demo — no enquiry was actually sent
         </p>
       ) : null}

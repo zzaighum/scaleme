@@ -2,13 +2,26 @@
 
 # Project context
 
-Marketing site for **YourLeadspartner**, a lead-generation agency selling to IT
+Marketing site for **Your Leads Partner**, a lead-generation agency selling to IT
 companies. Next.js 16 (App Router) + TypeScript + Tailwind v4, Supabase Postgres
 for enquiry storage in live mode. Repo: https://github.com/zzaighum/scaleme
 (repo name still says `scaleme`, the previous brand name).
 
 Read `README.md` for setup/architecture and `LAUNCH_CHECKLIST.md` for open
 launch blockers. Brand, site mode and CTA labels all live in `src/config/site.ts`.
+
+## Brand name
+
+The brand is **Your Leads Partner** — three capitalised words, renamed from the
+single-word "YourLeadspartner" on 26 Oct 2026. It lives in one place,
+`siteConfig.brandName`, and the wordmark is set from it as HTML text in
+`src/components/Logo.tsx`.
+
+`public/logo.svg` is the **old** wordmark, kept only as a reference: its
+letterforms are 13 vector paths spelling the previous name, so it cannot be
+edited to say anything else and nothing renders it any more.
+`public/logo-mark.svg` is the symbol, still in use. A designed wordmark for the
+new name would replace the text in `Logo.tsx`.
 
 ## Current state
 
@@ -56,8 +69,21 @@ This site must not carry invented proof. Specifically excluded, deliberately:
 - Invented pricing tiers, dollar figures or scarcity claims — pricing is
   quote-based.
 
-The hero funnel figures (100/60/30/10 percentages, 1,250 leads, 375 meetings,
-89 deals, +72% pipeline) are Figma mockup placeholders reproduced for design
-review. They are gated on `siteMode === "preview"` in
-`src/components/ProcessIllustration.tsx` and disappear in live mode. Keep that
-gate intact; if real figures ever replace them, they need a real source.
+The hero funnel now carries **real figures** (26 Oct 2026), so the old
+`siteMode === "preview"` gate is gone — these belong on the live site:
+
+- **113 contacted** — the 120 lead records in Salesforce less eight named
+  "Unknown" (four with no contact details at all), two test rows and the
+  owner's own record.
+- **10 meetings booked, 5 closed** — counted by hand from email and Telegram,
+  which is where those conversations happened.
+- Period March–October 2026, stated in the figure's caption.
+
+The mockup's other numbers (1,250 leads, 375 meetings, 89 deals, the "vs last
+month" deltas and "+72% pipeline value") are **deleted**, not gated: no prior
+period was ever recorded, so nothing could support them. The "Qualified" band
+went too — every Salesforce lead is still at status "New", so there was no
+number to put in it.
+
+Any change to these needs the same treatment: a real source, and the basis
+shown on screen.

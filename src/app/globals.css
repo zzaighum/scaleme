@@ -8,7 +8,17 @@
   --color-primary: #11635c;
   --color-primary-hover: #0c4a45;
   --color-accent: #d96b49;
+  /* Accent at text weight. #d96b49 is only 3.41:1 on white, so it fails WCAG
+     1.4.3 wherever it carries words (form errors, the "illustrative" badges).
+     This darker step is 6.02:1 on surface and 5.65:1 on canvas, and still
+     5.39:1 on the accent/10 tints. Use --color-accent for fills and borders,
+     --color-accent-text for anything readable. */
+  --color-accent-text: #a8431f;
   --color-border: #dce4df;
+  /* --color-border is 1.30:1 on surface: fine for a decorative card edge, but
+     a form control's boundary has to meet 3:1 (WCAG 1.4.11) because it is the
+     only thing marking where the field is. 3.42:1 on surface, 3.21:1 on canvas. */
+  --color-field-border: #808e88;
   --color-dark: #142b3b;
   --color-dark-fg: #f7f8f4;
 }
@@ -21,16 +31,23 @@
   --color-primary: var(--color-primary);
   --color-primary-hover: var(--color-primary-hover);
   --color-accent: var(--color-accent);
+  --color-accent-text: var(--color-accent-text);
   --color-border: var(--color-border);
+  --color-field-border: var(--color-field-border);
   --color-dark: var(--color-dark);
   --color-dark-fg: var(--color-dark-fg);
   --font-heading: var(--font-manrope);
   --font-body: var(--font-inter);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/*
+ * No `scroll-behavior: smooth` on `html`. It applies to every programmatic
+ * scroll, including the App Router's scroll-to-top on navigation, which turned
+ * each client-side navigation into an animation that stopped short — arriving
+ * 129px down the new page instead of at the top. The site has one in-page
+ * anchor (the skip link), and an instant jump is the better behaviour there
+ * anyway, so the declaration buys nothing and costs correct navigation.
+ */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -79,20 +96,41 @@ html {
   }
 }
 
+/*
+ * The header is `sticky top-0` at roughly 97px, so an anchor jump that puts a
+ * target flush against the viewport top leaves it underneath the header. The
+ * smooth-scroll removal above made the jump land exactly, which exposed this.
+ * scroll-margin-top reserves the header's height on any anchored target.
+ */
+#main-content,
+:target {
+  scroll-margin-top: 7rem;
+}
+
+/*
+ * Hidden by moving itself a full height out of view, not by a fixed negative
+ * offset. `top: -3rem` was 48px against a link that renders ~53px tall, so
+ * roughly 5px of it sat visible in the top-left corner of every page. A
+ * percentage transform cannot drift that way, whatever the font size does.
+ */
 .skip-link {
   position: absolute;
   left: 1rem;
-  top: -3rem;
+  top: 1rem;
   z-index: 100;
   background: var(--color-ink);
   color: var(--color-dark-fg);
   padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  transition: top 180ms ease;
+  /* -100% - 1rem put the bottom edge at exactly y=0: flush, but the browser
+     still paints that row, leaving a hairline across the top of the page. The
+     extra rem gives it real clearance instead of relying on an exact zero. */
+  transform: translateY(calc(-100% - 2rem));
+  transition: transform 180ms ease;
 }
 
 .skip-link:focus {
-  top: 1rem;
+  transform: translateY(0);
 }
 
 :focus-visible {

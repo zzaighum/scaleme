@@ -20,12 +20,33 @@ ErrorDocument 404 /404.html
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 </IfModule>
 
-# Build assets are content-hashed, so they can be cached indefinitely.
-# HTML must not be, or visitors keep seeing the previous deploy.
+# Next's generated OG image is written to `out/opengraph-image` with no file
+# extension, so the server has no extension to map and sends it with no usable
+# Content-Type. LinkedIn, Slack and X all reject an image that is not served as
+# one, which would mean no preview card on any shared link.
+<Files "opengraph-image">
+  ForceType image/png
+</Files>
+
+# Caching. Only `_next/static` filenames carry a content hash, so only those can
+# be frozen for a year. `/logo.svg`, `/logo-mark.svg` and `/icon.svg` live at
+# stable paths, and with the brand still provisional an immutable year would
+# mean a rebrand never reaching anyone who had already visited. HTML must never
+# be cached, or visitors keep seeing the previous deploy.
 <IfModule mod_headers.c>
-  <FilesMatch "\.(js|css|woff2?|svg|png|jpg|jpeg|webp|avif)$">
-    Header set Cache-Control "public, max-age=31536000, immutable"
+  SetEnvIf Request_URI "^/_next/static/" HASHED_ASSET=1
+
+  # Content-hashed build output: a new deploy writes new filenames.
+  Header set Cache-Control "public, max-age=31536000, immutable" env=HASHED_ASSET
+
+  # Stable-path assets served from the site root: one day.
+  <FilesMatch "\.(svg|png|jpg|jpeg|webp|avif|ico)$">
+    Header set Cache-Control "public, max-age=86400" env=!HASHED_ASSET
   </FilesMatch>
+  <Files "opengraph-image">
+    Header set Cache-Control "public, max-age=86400"
+  </Files>
+
   <FilesMatch "\.html$">
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>

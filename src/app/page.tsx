@@ -147,7 +147,7 @@ export default function HomePage() {
       <section className="bg-primary py-14 text-white sm:py-20">
         <div className="mx-auto grid max-w-[1200px] gap-12 px-5 sm:px-6 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-white/70">
+            <p className="text-sm font-semibold uppercase tracking-wide text-white/80">
               A focused alternative
             </p>
             <h2 className="mt-4 text-white text-[30px] sm:text-[40px]">
@@ -161,7 +161,7 @@ export default function HomePage() {
             </p>
             <Link
               href="/our-approach"
-              className="mt-5 inline-flex items-center gap-1 font-semibold text-white underline underline-offset-4"
+              className="mt-5 inline-flex min-h-[44px] items-center gap-1 font-semibold text-white underline underline-offset-4"
             >
               Read about our approach →
             </Link>
@@ -211,14 +211,14 @@ export default function HomePage() {
           </div>
           <Link
             href="/services"
-            className="inline-flex shrink-0 items-center gap-1 font-semibold text-primary underline underline-offset-4"
+            className="inline-flex min-h-[44px] shrink-0 items-center gap-1 font-semibold text-primary underline underline-offset-4"
           >
             View all services →
           </Link>
         </div>
       </section>
 
-      {/* Why YourLeadspartner */}
+      {/* Why Your Leads Partner */}
       <section className="bg-gradient-to-br from-primary to-dark py-14 text-white sm:py-20">
         <div className="mx-auto max-w-[1200px] px-5 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
@@ -249,7 +249,7 @@ export default function HomePage() {
                 </span>
                 <div>
                   <p className="text-xl font-bold text-white">{fact.stat}</p>
-                  <p className="text-sm text-white/70">{fact.label}</p>
+                  <p className="text-sm text-white/80">{fact.label}</p>
                 </div>
               </div>
             ))}
@@ -305,7 +305,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/pricing"
-            className="inline-flex shrink-0 items-center gap-1 font-semibold text-primary underline underline-offset-4"
+            className="inline-flex min-h-[44px] shrink-0 items-center gap-1 font-semibold text-primary underline underline-offset-4"
           >
             See Pricing & Engagement →
           </Link>
@@ -343,7 +343,7 @@ export default function HomePage() {
             </p>
             <Link
               href="/our-approach"
-              className="mt-5 inline-flex items-center gap-1 font-semibold text-dark-fg underline underline-offset-4"
+              className="mt-5 inline-flex min-h-[44px] items-center gap-1 font-semibold text-dark-fg underline underline-offset-4"
             >
               Explore Our Approach →
             </Link>
@@ -365,7 +365,7 @@ export default function HomePage() {
             </p>
             <Link
               href="/who-we-help"
-              className="mt-5 inline-flex items-center gap-1 font-semibold text-primary underline underline-offset-4"
+              className="mt-5 inline-flex min-h-[44px] items-center gap-1 font-semibold text-primary underline underline-offset-4"
             >
               See Who We Help →
             </Link>

@@ -1,4 +1,4 @@
-# YourLeadspartner — lead-generation agency website
+# Your Leads Partner — lead-generation agency website
 
 Marketing website for an agency that sells lead-generation services to IT companies
 (cold email, LinkedIn outreach, cold calling, marketplace prospecting). Built from an

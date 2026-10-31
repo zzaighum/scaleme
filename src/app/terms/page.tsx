@@ -14,14 +14,30 @@ const fields: { label: string; value: string }[] = [
     value:
       "These are website terms of use, not a service or engagement agreement. Service terms are set out separately in each client's signed proposal.",
   },
-  { label: "Business identity", value: "To be confirmed — real legal entity pending." },
+  {
+    label: "Business identity",
+    value: `This website is operated by ${siteConfig.businessIdentity.legalName ?? siteConfig.brandName}.`,
+  },
   {
     label: "Governing law and jurisdiction",
-    value: "To be confirmed by the business owner before launch.",
+    value:
+      "These terms are governed by the laws of Pakistan, and the courts of Pakistan have jurisdiction over any dispute arising from them.",
   },
-  { label: "Acceptable use of this website", value: "To be confirmed before launch." },
-  { label: "Intellectual property", value: "To be confirmed before launch." },
-  { label: "Contact for terms queries", value: "To be confirmed before launch." },
+  {
+    label: "Acceptable use of this website",
+    value:
+      "Use this site to read about the services and to send a genuine enquiry. Please do not submit automated or deliberately false enquiries, attempt to disrupt the site or probe it for vulnerabilities, or reproduce its content for resale.",
+  },
+  {
+    label: "Intellectual property",
+    value: `The text, graphics and layout of this website belong to ${siteConfig.businessIdentity.legalName ?? siteConfig.brandName} unless stated otherwise. You are welcome to read, print and share pages for your own reference; reproducing substantial parts commercially needs written permission.`,
+  },
+  {
+    label: "Contact for terms queries",
+    value: siteConfig.businessIdentity.contactEmail
+      ? `Email ${siteConfig.businessIdentity.contactEmail}.`
+      : "To be confirmed before launch.",
+  },
 ];
 
 export default function TermsPage() {

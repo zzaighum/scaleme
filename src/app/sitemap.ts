@@ -24,8 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Preview mode is excluded from indexing entirely (see robots.ts), but the
   // sitemap itself is harmless to generate either way.
   const base = siteConfig.canonicalSiteUrl.replace(/\/$/, "");
+  // `trailingSlash: true` means every page is served at `/about/`, and each
+  // page's own canonical carries the slash. Emitting `/about` here would
+  // advertise a URL that redirects, and point the sitemap at a different
+  // string from the canonical it resolves to.
   return marketingRoutes.map((route) => ({
-    url: `${base}${route}`,
+    url: route === "/" ? `${base}/` : `${base}${route}/`,
     lastModified: new Date(),
   }));
 }
