@@ -12,6 +12,16 @@ ErrorDocument 404 /404.html
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # One address per page: www and /index.html both served duplicates of the
+  # canonical URLs. Both go straight to https, so http://www takes a single hop.
+  RewriteCond %{HTTP_HOST} ^www\.yourleadspartner\.com$ [NC]
+  RewriteRule ^(.*)$ https://yourleadspartner.com/$1 [R=301,L]
+
+  # THE_REQUEST holds what the client asked for, so DirectoryIndex resolving a
+  # folder to index.html internally cannot trigger this and loop.
+  RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
+  RewriteRule ^ https://yourleadspartner.com/%1 [R=301,L]
+
   # Force HTTPS. Requires SSL to be active for the domain first — if the
   # certificate is not yet issued, this redirects into a loop. Enable SSL in
   # hPanel before uploading, or comment this block out until it is.

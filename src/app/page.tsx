@@ -6,6 +6,7 @@ import { ProcessSteps } from "@/components/ProcessSteps";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { ClosingCTA } from "@/components/ClosingCTA";
 import { ProcessIllustration } from "@/components/ProcessIllustration";
+import { JsonLd } from "@/components/JsonLd";
 import {
   RefreshIcon,
   GearIcon,
@@ -24,7 +25,9 @@ import { faqs } from "@/data/faqs";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Lead Generation for IT Companies",
+  // The root layout's title template does not apply to a page in the same
+  // segment, so the brand has to be written out here.
+  title: { absolute: `Lead Generation for IT Companies | ${siteConfig.brandName}` },
   description:
     "Reach relevant buyers through cold email, LinkedIn outreach, cold calling, and marketplace prospecting. Explore a managed programme for your IT company.",
   alternates: { canonical: "/" },
@@ -82,9 +85,43 @@ const campaignDirections = [
   },
 ];
 
+const homeFaqs = faqs.slice(0, 4);
+const siteBase = siteConfig.canonicalSiteUrl.replace(/\/$/, "");
+
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteBase}/#organization`,
+      name: siteConfig.brandName,
+      url: `${siteBase}/`,
+      logo: `${siteBase}/logo-mark.svg`,
+      description: metadata.description,
+      areaServed: "Worldwide",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteBase}/#website`,
+      name: siteConfig.brandName,
+      url: `${siteBase}/`,
+      publisher: { "@id": `${siteBase}/#organization` },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: homeFaqs.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    },
+  ],
+};
+
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={homeJsonLd} />
       {/* Hero */}
       <section className="mx-auto max-w-[1280px] px-5 pb-16 pt-14 sm:px-6 sm:pt-20">
         <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -374,7 +411,7 @@ export default function HomePage() {
           <div>
             <h2 className="text-[22px] sm:text-[26px]">Frequently asked questions</h2>
             <div className="mt-6">
-              <FAQAccordion items={faqs.slice(0, 4)} />
+              <FAQAccordion items={homeFaqs} />
             </div>
           </div>
         </div>

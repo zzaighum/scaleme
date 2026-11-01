@@ -2,15 +2,30 @@ import { PageIntro } from "./PageIntro";
 import { ChannelCard } from "./ChannelCard";
 import { ClosingCTA } from "./ClosingCTA";
 import { Notice } from "./Notice";
+import { JsonLd } from "./JsonLd";
+import { siteConfig } from "@/config/site";
 import { getChannel, relatedChannels } from "@/data/services";
 
 export function ChannelPageTemplate({ slug }: { slug: string }) {
   const channel = getChannel(slug);
   if (!channel) return null;
   const related = relatedChannels(slug);
+  const base = siteConfig.canonicalSiteUrl.replace(/\/$/, "");
 
   return (
     <div className="mx-auto max-w-[1200px] px-5 py-16 sm:px-6 sm:py-24">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: channel.titleTag,
+          url: `${base}/services/${channel.slug}/`,
+          description: channel.intro,
+          provider: { "@type": "Organization", "@id": `${base}/#organization`, name: siteConfig.brandName },
+          areaServed: "Worldwide",
+          audience: { "@type": "BusinessAudience", name: "IT companies" },
+        }}
+      />
       <PageIntro title={channel.h1}>{channel.intro}</PageIntro>
 
       <div className="mx-auto mt-16 max-w-[760px]">

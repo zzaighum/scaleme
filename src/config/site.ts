@@ -54,6 +54,13 @@ export const siteConfig = {
   bookingMode: asBookingMode(process.env.NEXT_PUBLIC_BOOKING_MODE),
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "",
 
+  // Google Analytics 4 measurement id (G-XXXXXXXXXX). Blank loads no analytics
+  // script at all. Only accepted in the documented format, because it is written
+  // into an inline script.
+  gaMeasurementId: /^G-[A-Z0-9]+$/.test(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "")
+    ? (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID as string)
+    : "",
+
   // Enquiry destination on the static build. There is no `/api/enquiry` here,
   // so the form posts straight to whatever CRM/form endpoint this names
   // (HubSpot, Formspree, Getform, …). Left blank, the form stays an
